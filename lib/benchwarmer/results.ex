@@ -9,7 +9,9 @@ end
 
 defimpl String.Chars, for: Benchwarmer.Results do
   def to_string(r) do
-    "#{pretty_time(r.duration)} sec   #{pretty_num(r.n)} iterations   #{opsec(r)} μs/op"
+    Enum.join [ "#{pretty_time(r.duration)} sec",
+                "#{pretty_num(r.n)} iterations",
+                "#{opsec(r)} μs/op" ], "   "
   end
 
   defp opsec(%Benchwarmer.Results{n: 0}), do: 0
