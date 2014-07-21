@@ -1,14 +1,13 @@
 defmodule Benchwarmer do
   @moduledoc """
   Benchwarmer is a microbenchmarking utility that runs a function (or list of
-  functions) repeatedly against a dataset for a period of time (default: 1
-  second), and then reports on the average time each operation took to complete.
+  functions) repeatedly against a dataset for a period of time, and then reports
+  on the average time each operation took to complete.
 
   Highly inspired by the built-in benchmark operations in Go.
   """
 
-  # minimum duration for a benchmark is 1 second (1Mμs)
-  @default_duration 1_000_000
+  @default_duration 1_000_000 # 1 second (1Mμs)
 
   alias Benchwarmer.Results
 
@@ -16,7 +15,10 @@ defmodule Benchwarmer do
   Benchmarks a function or list of functions with optional args.
 
   ## Examples
-    iex> Benchwarmer.benchmark &String.last/1, ["abcdefghijklmnop"]
+
+    iex> Benchwarmer.benchmark fn -> 123456*654321 end
+    #Function<20.90072148/0 in :erl_eval.expr/5>
+    1.2 sec   2M iterations   0.61 μs/op
 
     iex> Benchwarmer.benchmark [&String.first/1, &String.last/1], ["abcdefghijklmnop"]
     &String.first/1
@@ -24,7 +26,6 @@ defmodule Benchwarmer do
     &String.last/1
     1.2 sec   524K iterations   2.33 μs/op
   """
-  # args is a list of arguments, as a list
   def benchmark(f, args \\ [], min_duration \\ @default_duration)
   def benchmark(f, args, min_duration) when is_function(f) do
     benchmark([f], args, min_duration)
@@ -38,15 +39,18 @@ defmodule Benchwarmer do
     end)
   end
 
+  #
+  # Benchmarks an individual function against args and returns results.
+  #
   defp do_benchmark(f, args, min_duration, results \\ %Results{}) do
-    # TODO: does this help with the load timer issues?
+    # TODO: does this help with the load timer issues? check it out.
     :timer.start()
 
     cond do
-      # if elapsed test time is greater than minimum, return no matter what
+      # when elapsed test time is greater than minimum, return results
       results.duration >= min_duration -> results
 
-      # first time run for a single iteration
+      # first pass, run for a single iteration only
       results.n == 0 ->
         {:ok, _, optime} = run_n_times(f, args, 1)
         do_benchmark( f, args, min_duration,
@@ -65,6 +69,9 @@ defmodule Benchwarmer do
     end
   end
 
+  #
+  # Runs a function with args N times.
+  #
   defp run_n_times(f, args, 1) do
     {optime, _results} = :timer.tc(f, args)
     {:ok, 1, optime}
