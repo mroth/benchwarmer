@@ -1,4 +1,4 @@
-Benchwarmer
+Benchwarmer (Work in Progress)
 ===========
 
 Benchwarmer is an Elixir micro-benchmarking utility that runs a function (or
