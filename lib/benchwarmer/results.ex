@@ -5,25 +5,41 @@ defmodule Benchwarmer.Results do
     duration: 0    # time elapsed in μs
     #bytes: 0,     # TODO: optional bytes for MB/s calcs (see golang version)
   )
+
+  alias Benchwarmer.Results
+  def optime(%Results{n: 0}), do: 0.0
+  def optime(%Results{duration: duration, n: n}), do: duration / n
+
 end
 
+
 defimpl String.Chars, for: Benchwarmer.Results do
+  alias Benchwarmer.Results.Helpers
+
   def to_string(r) do
-    Enum.join [ "#{pretty_time(r.duration)} sec",
-                "#{pretty_num(r.n)} iterations",
-                "#{opsec(r)} μs/op" ], "   "
+    Enum.join [ "#{Helpers.pretty_time(r.duration)} sec",
+                "#{Helpers.pretty_num(r.n)} iterations",
+                "#{Helpers.pretty_optime(r)} μs/op" ], "   "
+  end
+end
+
+defmodule Benchwarmer.Results.Helpers do
+  @moduledoc """
+  Helper methods used to format Benchwarmer.Results when rendered to string or
+  inspected in iex.
+
+  Mostly one-off string formatters. You can safely ignore these. :-)
+  """
+
+  def pretty_optime(r) do
+    Float.ceil(Benchwarmer.Results.optime(r), 2)
   end
 
-  defp opsec(%Benchwarmer.Results{n: 0}), do: 0
-  defp opsec(r) do
-    Float.ceil(r.duration / r.n, 2)
-  end
-
-  defp pretty_time(ms) do
+  def pretty_time(ms) do
     Float.floor(ms/1_000_000, 1) |> Kernel.to_string
   end
 
-  defp pretty_num(n) do
+  def pretty_num(n) do
     cond do
       n >= 1_000_000_000_000 ->
         Kernel.to_string(trunc(Float.floor(n/1_000_000_000_000))) <> "T"
@@ -35,5 +51,7 @@ defimpl String.Chars, for: Benchwarmer.Results do
         Kernel.to_string(trunc(Float.floor(n/1000))) <> "K"
       true -> Kernel.to_string(n)
     end
+
   end
+
 end
