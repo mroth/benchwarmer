@@ -1,4 +1,4 @@
-Benchwarmer (Work in Progress)
+Benchwarmer
 ===========
 
 Benchwarmer is an Elixir micro-benchmarking utility that runs a function (or list of functions) repeatedly against a dataset for a period of time, and then reports on the average time each operation took to complete, allowing for easy comparison.
@@ -30,3 +30,5 @@ Comparing two different functions with the same data as an argument:
 
 ## Work in Progress
 Please note this library is a work in progress, and the API will likely change.  In particular, I'm looking for feedback from the Elixir community as to what would be useful before declaring a version `0.0.1` and uploading on Hex.
+
+Therefore, please give it a try and send me your feedback (or pull requests!)
