@@ -22,24 +22,26 @@ defmodule Benchwarmer do
     #Function<20.90072148/0 in :erl_eval.expr/5>
     1.2 sec   2M iterations   0.61 μs/op
 
-    iex> Benchwarmer.benchmark [&String.first/1, &String.last/1], ["abcdefghijklmnop"]
+    iex> alphabet = "abcdefghijklmnopqrstuvwxyz"
+    iex> Benchwarmer.benchmark [&String.first/1, &String.last/1], alphabet
     &String.first/1
-    1.0 sec   4M iterations   0.24 μs/op
+    1.0 sec   4M iterations   0.25 μs/op
     &String.last/1
-    1.2 sec   524K iterations   2.33 μs/op
+    1.0 sec   262K iterations   3.83 μs/op
   """
-  def benchmark(f, args \\ [], min_duration \\ @default_duration)
-  def benchmark(f, args, min_duration) when is_function(f) do
-    benchmark([f], args, min_duration)
-  end
-  def benchmark(f, args, min_duration) when is_list(f) and is_list(args) do
-    Enum.map(f, fn(fp) ->
-      IO.inspect fp
+  def benchmark(f, args \\ [], min_duration \\ @default_duration) do
+    functions = List.wrap(f)
+    safe_args = List.wrap(args)
 
-      results = do_benchmark(fp, args, min_duration)
+    Enum.map(functions, fn(fp) ->
+      IO.inspect fp
+      results = do_benchmark(fp, safe_args, min_duration)
       IO.puts results
       results
     end)
+
+    # for future reference, gvaughn one-liner without the IO
+    # List.wrap(f) |> Enum.map &do_benchmark(&1, List.wrap(args), min_duration)
   end
 
   #
