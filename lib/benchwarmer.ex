@@ -1,10 +1,12 @@
 defmodule Benchwarmer do
   @moduledoc """
-  Benchwarmer is a microbenchmarking utility that runs a function (or list of
-  functions) repeatedly against a dataset for a period of time, and then reports
-  on the average time each operation took to complete.
+  Benchwarmer is an Elixir micro-benchmarking utility that runs a function (or
+  list of functions) repeatedly against a dataset for a period of time, and then
+  reports on the average time each operation took to complete, allowing for easy
+  comparison.
 
-  Highly inspired by the built-in benchmark operations in Go.
+  Benchwarmer was inspired by the built-in benchmark operations in the Go
+  test library.
   """
 
   @default_duration 1_000_000 # 1 second (1Mμs)
