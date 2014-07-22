@@ -51,7 +51,7 @@ defmodule Benchwarmer.Results.Helpers do
         Kernel.to_string(trunc(Float.floor(n/1000))) <> "K"
       true -> Kernel.to_string(n)
     end
-
+    |> String.rjust(4)
   end
 
 end

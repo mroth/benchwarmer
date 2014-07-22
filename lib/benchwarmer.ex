@@ -13,6 +13,7 @@ defmodule Benchwarmer do
 
   alias Benchwarmer.Results
 
+
   @doc """
   Benchmarks a function or list of functions with optional args.
 
@@ -20,14 +21,16 @@ defmodule Benchwarmer do
 
     iex> Benchwarmer.benchmark fn -> 123456*654321 end
     #Function<20.90072148/0 in :erl_eval.expr/5>
-    1.2 sec   2M iterations   0.61 μs/op
+    1.2 sec     2M iterations   0.61 μs/op
 
     iex> alphabet = "abcdefghijklmnopqrstuvwxyz"
     iex> Benchwarmer.benchmark [&String.first/1, &String.last/1], alphabet
     &String.first/1
-    1.0 sec   4M iterations   0.25 μs/op
+    1.0 sec     4M iterations   0.25 μs/op
     &String.last/1
-    1.0 sec   262K iterations   3.83 μs/op
+    1.0 sec   262K iterations   4.04 μs/op
+    [%Benchwarmer.Results{duration: 1034582, n: 4194303, prev_n: 2097152},
+     %Benchwarmer.Results{duration: 1057108, n: 262143, prev_n: 131072}]
   """
   def benchmark(f, args \\ [], min_duration \\ @default_duration) do
     functions = List.wrap(f)
