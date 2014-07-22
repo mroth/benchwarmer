@@ -2,10 +2,33 @@ defmodule Benchwarmer.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :benchwarmer,
-     version: "0.0.1",
-     elixir: "~> 0.14.3",
-     deps: deps]
+    [
+      app:          :benchwarmer,
+      version:      "0.0.1",
+      elixir:       "~> 0.14.3",
+      deps:         deps,
+      description:  description,
+      package:      package
+    ]
+  end
+
+  defp description do
+    """
+    Benchwarmer is an Elixir micro-benchmarking utility that runs a function (or
+    list of functions) repeatedly against a dataset for a period of time, and
+    then reports on the average time each operation took to complete, allowing
+    for easy comparison.
+    """
+  end
+
+  defp package do
+    [
+      contributors: [ "Matthew Rothenberg <mroth@mroth.info>" ],
+      licenses:     [ "Same as Elixir" ],
+      links:        %{
+                       "GitHub" => "https://github.com/mroth/benchwarmer",
+                    }
+    ]
   end
 
   # Configuration for the OTP application
