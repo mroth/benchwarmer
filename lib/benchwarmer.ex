@@ -33,11 +33,12 @@ defmodule Benchwarmer do
     benchmark([f], args, min_duration)
   end
   def benchmark(f, args, min_duration) when is_list(f) and is_list(args) do
-    Enum.each(f, fn(fp) ->
+    Enum.map(f, fn(fp) ->
       IO.inspect fp
 
       results = do_benchmark(fp, args, min_duration)
       IO.puts results
+      results
     end)
   end
 
