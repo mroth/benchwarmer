@@ -2,8 +2,9 @@ defmodule Benchwarmer.Results do
   defstruct(
     n: 0,          # completed iterations
     prev_n: 0,     # iterations run in previous cycle
-    duration: 0    # time elapsed in μs
-    #bytes: 0,     # TODO: optional bytes for MB/s calcs (see golang version)
+    duration: 0,   # time elapsed in μs
+    function: nil, # the function that was executed when the benchmark was run
+    args: nil      # the args that were used to execute the function
   )
 
   alias Benchwarmer.Results
@@ -13,15 +14,43 @@ defmodule Benchwarmer.Results do
 end
 
 
+# ########################################################################
+# # On second thought, I think that overriding inspect makes it harder for
+# # people who would be using this programmatically.
+# ########################################################################
+# defimpl Inspect, for: Benchwarmer.Results do
+#   alias Benchwarmer.Results.Helpers
+#
+#   def inspect(r, _) do
+#     name = "#{Inspect.inspect(r.function, nil)}"
+#     content = Enum.join([
+#                           "#{Helpers.pretty_time(r.duration)} sec",
+#                           "#{Helpers.pretty_num(r.n)} iterations",
+#                           "#{Helpers.pretty_optime(r)} μs/op"
+#                         ], ", ")
+#
+#     """
+#     #Benchwarmer.Results[#{name}]<#{content}>
+#     """ |> String.rstrip
+#   end
+# end
+
 defimpl String.Chars, for: Benchwarmer.Results do
   alias Benchwarmer.Results.Helpers
 
   def to_string(r) do
-    Enum.join [ "#{Helpers.pretty_time(r.duration)} sec",
-                "#{Helpers.pretty_num(r.n)} iterations",
-                "#{Helpers.pretty_optime(r)} μs/op" ], "   "
+    name = "#{Inspect.inspect(r.function, nil)}"
+    data = Enum.join [ "#{Helpers.pretty_time(r.duration)} sec",
+                       "#{Helpers.pretty_num(r.n)} iterations",
+                       "#{Helpers.pretty_optime(r)} μs/op" ], "   "
+
+    """
+    *** #{name} ***
+    #{data}
+    """
   end
 end
+
 
 defmodule Benchwarmer.Results.Helpers do
   @moduledoc """

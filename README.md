@@ -7,17 +7,26 @@ Benchwarmer was inspired by the built-in benchmark operations in the Go test lib
 
 
 ## Examples
+You can simply pass an inline function, results will be pretty printed to screen
+as well as returned in a struct:
 
     iex> Benchwarmer.benchmark fn -> 123456*654321 end
-    #Function<20.90072148/0 in :erl_eval.expr/5>
+    *** #Function<20.90072148/0 in :erl_eval.expr/5> ***
     1.2 sec     2M iterations   0.61 μs/op
+
+    [%Benchwarmer.Results{...}]
+
+Comparing two different functions with the same data as an argument:
 
     iex> alphabet = "abcdefghijklmnopqrstuvwxyz"
     iex> Benchwarmer.benchmark [&String.first/1, &String.last/1], alphabet
-    &String.first/1
-    1.0 sec     4M iterations   0.25 μs/op
-    &String.last/1
-    1.0 sec   262K iterations   4.04 μs/op
+    *** &String.first/1 ***
+    1.9 sec     8M iterations   0.24 μs/op
+
+    *** &String.last/1 ***
+    1.9 sec   524K iterations   3.75 μs/op
+
+    [%Benchwarmer.Results{...}, %Benchwarmer.Results{...}]
 
 ## Work in Progress
 Please note this library is a work in progress, and the API will likely change.  In particular, I'm looking for feedback from the Elixir community as to what would be useful before declaring a version `0.0.1` and uploading on Hex.

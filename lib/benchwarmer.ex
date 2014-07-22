@@ -18,22 +18,26 @@ defmodule Benchwarmer do
   Benchmarks a function or list of functions with optional args.
 
   ## Examples
-  You can simply pass an inline function:
+  You can simply pass an inline function, results will be pretty printed to
+  screen as well as returned in a struct:
 
       iex> Benchwarmer.benchmark fn -> 123456*654321 end
       #Function<20.90072148/0 in :erl_eval.expr/5>
       1.2 sec     2M iterations   0.61 μs/op
 
+      [%Benchwarmer.Results{...}]
+
   Comparing two different functions with the same data as an argument:
 
       iex> alphabet = "abcdefghijklmnopqrstuvwxyz"
       iex> Benchwarmer.benchmark [&String.first/1, &String.last/1], alphabet
-      &String.first/1
-      1.0 sec     4M iterations   0.25 μs/op
-      &String.last/1
-      1.0 sec   262K iterations   4.04 μs/op
-      [%Benchwarmer.Results{duration: 1034582, n: 4194303, prev_n: 2097152},
-       %Benchwarmer.Results{duration: 1057108, n: 262143, prev_n: 131072}]
+      *** &String.first/1 ****
+      1.9 sec     8M iterations   0.24 μs/op
+
+      *** &String.last/1 ****
+      1.9 sec   524K iterations   3.75 μs/op
+
+      [%Benchwarmer.Results{...}, %Benchwarmer.Results{...}]
 
   """
   def benchmark(f, args \\ [], min_duration \\ @default_duration) do
@@ -41,7 +45,7 @@ defmodule Benchwarmer do
     safe_args = List.wrap(args)
 
     Enum.map(functions, fn(fp) ->
-      IO.inspect fp
+      # IO.inspect fp
       results = do_benchmark(fp, safe_args, min_duration)
       IO.puts results
       results
@@ -60,7 +64,8 @@ defmodule Benchwarmer do
 
     cond do
       # when elapsed test time is greater than minimum, return results
-      results.duration >= min_duration -> results
+      # (decorate results with original function for later introspection)
+      results.duration >= min_duration -> %{results | function: f, args: args}
 
       # first pass, run for a single iteration only
       results.n == 0 ->
