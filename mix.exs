@@ -26,7 +26,7 @@ defmodule Benchwarmer.Mixfile do
   defp package do
     [
       contributors: [ "Matthew Rothenberg <mroth@mroth.info>" ],
-      licenses:     [ "Same as Elixir" ],
+      licenses:     [ "WTFPL" ],
       links:        %{
                        "GitHub" => "https://github.com/mroth/benchwarmer",
                        "Docs"   => "https://mroth.github.io/benchwarmer/"
