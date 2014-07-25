@@ -5,6 +5,8 @@ defmodule Benchwarmer do
   reports on the average time each operation took to complete, allowing for easy
   comparison.
 
+  It is optimized for interactive testing in IEX.
+
   Benchwarmer was inspired by the built-in benchmark operations in the Go
   test library.
   """
@@ -45,7 +47,6 @@ defmodule Benchwarmer do
     safe_args = List.wrap(args)
 
     Enum.map(functions, fn(fp) ->
-      # IO.inspect fp
       results = do_benchmark(fp, safe_args, min_duration)
       IO.puts results
       results
