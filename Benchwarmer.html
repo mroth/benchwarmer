@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Benchwarmer</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+      relpath = '';
+      if (relpath != '') relpath += '/';
+    </script>
+
+    <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+
+    <div id="content">
+      <div class="breadcrumbs">Benchwarmer v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Benchwarmer.html">Benchwarmer</a></div>
+
+      <h1>
+        Benchwarmer
+        
+      </h1>
+
+      <ul class="summary_links">
+        
+          <li><a href="#summary">Summary</a></li>
+        
+        
+          <li><a href="#functions_details">Functions</a></li>
+        
+        
+        
+        
+      </ul>
+
+      
+        <div id="moduledoc" class="docstring">
+          <p>Benchwarmer is an Elixir micro-benchmarking utility that runs a function (or
+list of functions) repeatedly against a dataset for a period of time, and then
+reports on the average time each operation took to complete, allowing for easy
+comparison.</p>
+<p>It is optimized for interactive testing in IEx.</p>
+<p>Benchwarmer was inspired by the built-in benchmark operations in the Go
+test library.</p>
+
+        </div>
+      
+
+      
+        <a href="https://github.com/mroth/benchwarmer/blob/master/lib/benchwarmer.ex#L1" class="view_source">Source</a>
+      
+
+      
+        <h2 id="summary">Summary<div class="detail_header_links"><a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a></div></h2>
+        <table class="summary">
+          <tr>
+  <td class="summary_signature"><a href="#benchmark/3">benchmark(f, args \\ [], min_duration \\ 1000000)</a></td>
+  
+    <td class="summary_synopsis"><p>Benchmarks a function or list of functions with optional args</p>
+</td>
+  
+</tr>
+
+        </table>
+      
+
+      
+
+      
+        <div id="functions_details" class="details_list">
+          <h2>Functions</h2>
+          <div class="detail">
+  <div class="detail_header" id="benchmark/3">
+    <span class="signature"><strong>benchmark(f, args \\ [], min_duration \\ 1000000)</strong></span>
+    <div class="detail_header_links">
+      <span class="detail_type">(function)</span>
+      <a href="#benchmark/3" class="detail_link" title="Link to this function">#</a>
+      <a class="to_top_link" href="#content" title="To the top of the page">&uarr;</a>
+    </div>
+  </div>
+  
+  <div class="docstring"><p>Benchmarks a function or list of functions with optional args.</p>
+<h2>Examples</h2>
+<p>You can simply pass an inline function, results will be pretty printed to
+screen as well as returned in a struct:</p>
+<pre><code>
+iex&gt; Benchwarmer.benchmark fn -&gt; 123456*654321 end
+#Function&lt;20.90072148/0 in :erl_eval.expr/5&gt;
+1.2 sec     2M iterations   0.61 μs/op
+
+[%Benchwarmer.Results{...}]
+
+</code></pre>
+<p>Comparing two different functions with the same data as an argument:</p>
+<pre><code>
+iex&gt; alphabet = &quot;abcdefghijklmnopqrstuvwxyz&quot;
+iex&gt; Benchwarmer.benchmark [&amp;String.first/1, &amp;String.last/1], alphabet
+*** &amp;String.first/1 ****
+1.9 sec     8M iterations   0.24 μs/op
+
+*** &amp;String.last/1 ****
+1.9 sec   524K iterations   3.75 μs/op
+
+[%Benchwarmer.Results{...}, %Benchwarmer.Results{...}]
+
+
+</code></pre>
+</div>
+  
+    <a href="https://github.com/mroth/benchwarmer/blob/master/lib/benchwarmer.ex#L44" class="view_source">Source</a>
+  
+</div>
+
+        </div>
+      
+
+      
+
+      
+    </div>
+  </body>
+</html>
