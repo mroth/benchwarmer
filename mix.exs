@@ -7,6 +7,8 @@ defmodule Benchwarmer.Mixfile do
       version:      "0.0.1",
       elixir:       "~> 0.14.3",
       deps:         deps,
+      name:         "Benchwarmer",
+      source_url:   "https://github.com/mroth/benchwarmer",
       description:  description,
       package:      package
     ]
@@ -27,6 +29,7 @@ defmodule Benchwarmer.Mixfile do
       licenses:     [ "Same as Elixir" ],
       links:        %{
                        "GitHub" => "https://github.com/mroth/benchwarmer",
+                       "Docs"   => "https://mroth.github.io/benchwarmer/"
                     }
     ]
   end
@@ -48,6 +51,9 @@ defmodule Benchwarmer.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [
+      {:ex_doc,  github: "elixir-lang/ex_doc", only: :dev},
+      {:earmark, github: "pragdave/earmark",   only: :dev}
+    ]
   end
 end

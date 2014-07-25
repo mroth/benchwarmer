@@ -1,13 +1,25 @@
 defmodule Benchwarmer.Results do
+  @moduledoc """
+  Defines results of a Benchwarmer benchmark run.
+
+  Handled as a struct with the following values:
+
+    - n:             completed iterations
+    - prev_n:        iterations run in previous cycle
+    - duration:      time elapsed in μs
+    - function:      the function that was executed when the benchmark was run
+    - args:          the args that were used to execute the function
+  """
   defstruct(
-    n: 0,          # completed iterations
-    prev_n: 0,     # iterations run in previous cycle
-    duration: 0,   # time elapsed in μs
-    function: nil, # the function that was executed when the benchmark was run
-    args: nil      # the args that were used to execute the function
+    n: 0, prev_n: 0, duration: 0, function: nil, args: nil
   )
 
   alias Benchwarmer.Results
+
+  @doc """
+  Returns average execution time per operation for a result, in microseconds.
+  """
+  @spec optime(Results) :: float
   def optime(%Results{n: 0}), do: 0.0
   def optime(%Results{duration: duration, n: n}), do: duration / n
 
@@ -53,12 +65,11 @@ end
 
 
 defmodule Benchwarmer.Results.Helpers do
-  @moduledoc """
-  Helper methods used to format Benchwarmer.Results when rendered to string or
-  inspected in iex.
-
-  Mostly one-off string formatters. You can safely ignore these. :-)
-  """
+  @moduledoc false
+  # Helper methods used to format Benchwarmer.Results when rendered to string or
+  # inspected in iex.
+  #
+  # Mostly one-off string formatters. You can safely ignore these. :-)
 
   def pretty_optime(r) do
     Float.ceil(Benchwarmer.Results.optime(r), 2)
