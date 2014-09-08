@@ -13,4 +13,4 @@ end
 
 File.rm_rf! "docs"
 
-IO.puts IO.ANSI.escape("%{green}Updated docs pushed to origin/gh-pages")
+Mix.shell.info [:green, "Updated docs pushed to origin/gh-pages."]

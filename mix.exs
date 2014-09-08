@@ -4,8 +4,8 @@ defmodule Benchwarmer.Mixfile do
   def project do
     [
       app:          :benchwarmer,
-      version:      "0.0.1",
-      elixir:       "~> 0.14.3",
+      version:      "0.0.2",
+      elixir:       "~> 1.0.0-rc1",
       deps:         deps,
       name:         "Benchwarmer",
       source_url:   "https://github.com/mroth/benchwarmer",
