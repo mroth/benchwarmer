@@ -20,7 +20,7 @@
     </script>
 
     <div id="content">
-      <div class="breadcrumbs">Benchwarmer v0.0.1 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Benchwarmer.html">Benchwarmer</a></div>
+      <div class="breadcrumbs">Benchwarmer v0.0.2 &rarr; <a href="overview.html">Overview</a> &rarr; <a href="Benchwarmer.html">Benchwarmer</a></div>
 
       <h1>
         Benchwarmer
@@ -89,17 +89,13 @@ test library.</p>
 <h2>Examples</h2>
 <p>You can simply pass an inline function, results will be pretty printed to
 screen as well as returned in a struct:</p>
-<pre><code>
-iex&gt; Benchwarmer.benchmark fn -&gt; 123456*654321 end
+<pre><code>iex&gt; Benchwarmer.benchmark fn -&gt; 123456*654321 end
 #Function&lt;20.90072148/0 in :erl_eval.expr/5&gt;
 1.2 sec     2M iterations   0.61 μs/op
 
-[%Benchwarmer.Results{...}]
-
-</code></pre>
+[%Benchwarmer.Results{...}]</code></pre>
 <p>Comparing two different functions with the same data as an argument:</p>
-<pre><code>
-iex&gt; alphabet = &quot;abcdefghijklmnopqrstuvwxyz&quot;
+<pre><code>iex&gt; alphabet = &quot;abcdefghijklmnopqrstuvwxyz&quot;
 iex&gt; Benchwarmer.benchmark [&amp;String.first/1, &amp;String.last/1], alphabet
 *** &amp;String.first/1 ****
 1.9 sec     8M iterations   0.24 μs/op
@@ -107,10 +103,7 @@ iex&gt; Benchwarmer.benchmark [&amp;String.first/1, &amp;String.last/1], alphabe
 *** &amp;String.last/1 ****
 1.9 sec   524K iterations   3.75 μs/op
 
-[%Benchwarmer.Results{...}, %Benchwarmer.Results{...}]
-
-
-</code></pre>
+[%Benchwarmer.Results{...}, %Benchwarmer.Results{...}]</code></pre>
 </div>
   
     <a href="https://github.com/mroth/benchwarmer/blob/master/lib/benchwarmer.ex#L44" class="view_source">Source</a>
